@@ -301,7 +301,7 @@ AC_DEFUN([LIB_BUILD_FREETYPE],
     $ECHO -e "@echo off\n"\
 	     "$MSBUILD $vcxproj_path "\
 		       "/p:PlatformToolset=$PLATFORM_TOOLSET "\
-		       "/p:Configuration=\"Release Multithreaded\" "\
+		       "/p:Configuration=\"Release\" "\
 		       "/p:Platform=$freetype_platform "\
 		       "/p:ConfigurationType=DynamicLibrary "\
 		       "/p:TargetName=freetype "\

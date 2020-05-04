@@ -4379,7 +4379,7 @@ VS_SDK_PLATFORM_NAME_2017=
 #CUSTOM_AUTOCONF_INCLUDE
 
 # Do not change or remove the following line, it is needed for consistency checks:
-DATE_WHEN_GENERATED=1585090987
+DATE_WHEN_GENERATED=1588606108
 
 ###############################################################################
 #
@@ -43948,7 +43948,7 @@ $as_echo "$as_me: Trying to compile freetype sources with PlatformToolset=$PLATF
     $ECHO -e "@echo off\n"\
 	     "$MSBUILD $vcxproj_path "\
 		       "/p:PlatformToolset=$PLATFORM_TOOLSET "\
-		       "/p:Configuration=\"Release Multithreaded\" "\
+		       "/p:Configuration=\"Release\" "\
 		       "/p:Platform=$freetype_platform "\
 		       "/p:ConfigurationType=DynamicLibrary "\
 		       "/p:TargetName=freetype "\
