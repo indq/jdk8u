@@ -1,0 +1,31 @@
+environment:
+    global:
+        CYG_ROOT: C:\cygwin64
+        CYG_MIRROR: http://cygwin.mirror.constant.com
+        CYG_CACHE: C:\cygwin64\var\cache\setup
+        CYG_BASH: C:\cygwin64\bin\bash
+
+cache:
+- '%CYG_CACHE%'
+
+init:
+- git config --global core.autocrlf input
+
+install:
+- '%CYG_ROOT%\setup-x86_64.exe --quiet-mode --no-shortcuts --upgrade-also --packages binutils,make,m4,cpio,awk,file,zip,unzip,procps,git'
+- '%CYG_ROOT%\bin\cygcheck -dc'
+
+version: 1.0.{build}
+image: Visual Studio 2015
+build_script:
+- cmd: mkdir C:\Temp
+- cmd: cd /d C:\cygwin64\bin && .\bash --login /cygdrive/c/projects/jdk8u/.appveyor/windows-build.sh
+- cmd: cd /d C:\projects\jdk8u
+
+artifacts:
+- path: build/windows-x86_64-normal-server-release/images/j2re-image
+  name: jre
+  type: zip
+- path: build/windows-x86_64-normal-server-release/images/j2sdk-image
+  name: jdk
+  type: zip
