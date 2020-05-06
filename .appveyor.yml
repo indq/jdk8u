@@ -22,6 +22,10 @@ build_script:
 - cmd: cd /d C:\cygwin64\bin && .\bash --login /cygdrive/c/projects/jdk8u/.appveyor/windows-build.sh
 - cmd: cd /d C:\projects\jdk8u
 
+test_script:
+- cmd: .\build\windows-x86_64-normal-server-release\images\j2re-image\bin\java -version
+- cmd: .\build\windows-x86_64-normal-server-release\images\j2sdk-image\bin\java -version
+
 artifacts:
 - path: build/windows-x86_64-normal-server-release/images/j2re-image
   name: jre
