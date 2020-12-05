@@ -844,6 +844,7 @@ JDK_MICRO_VERSION
 JDK_MINOR_VERSION
 JDK_MAJOR_VERSION
 USER_RELEASE_SUFFIX
+ENABLE_JFR
 COMPRESS_JARS
 UNLIMITED_CRYPTO
 CACERTS_FILE
@@ -1058,6 +1059,7 @@ enable_headful
 enable_hotspot_test_in_build
 with_cacerts_file
 enable_unlimited_crypto
+enable_jfr
 with_milestone
 with_update_version
 with_user_release_suffix
@@ -1843,6 +1845,7 @@ Optional Features:
                           run the Queens test after Hotspot build [disabled]
   --enable-unlimited-crypto
                           Enable unlimited crypto policy [disabled]
+  --disable-jfr           Disable Java Flight Recorder support [enabled]
   --disable-debug-symbols disable generation of debug symbols [enabled]
   --disable-zip-debug-info
                           disable zipping of debug-info files [enabled]
@@ -3912,7 +3915,7 @@ pkgadd_help() {
 
 
 #
-# Copyright (c) 2011, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2011, 2020, Oracle and/or its affiliates. All rights reserved.
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 #
 # This code is free software; you can redistribute it and/or modify it
@@ -4379,7 +4382,7 @@ VS_SDK_PLATFORM_NAME_2017=
 #CUSTOM_AUTOCONF_INCLUDE
 
 # Do not change or remove the following line, it is needed for consistency checks:
-DATE_WHEN_GENERATED=1588606108
+DATE_WHEN_GENERATED=1607186384
 
 ###############################################################################
 #
@@ -19803,6 +19806,44 @@ fi
 
 
 
+  ###############################################################################
+  #
+  # Enable or disable JFR
+  #
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to build JFR" >&5
+$as_echo_n "checking whether to build JFR... " >&6; }
+  # Check whether --enable-jfr was given.
+if test "${enable_jfr+set}" = set; then :
+  enableval=$enable_jfr;
+else
+  enable_jfr=auto
+fi
+
+  if test "x$enable_jfr" = "xno"; then
+    ENABLE_JFR=false
+  elif test "x$enable_jfr" = "xyes" -o "x$enable_jfr" = "xauto"; then
+    if test "x$JVM_VARIANT_MINIMAL1" = "xtrue" -o "x$JVM_VARIANT_ZERO" = "xtrue"; then
+      if test "x$enable_jfr" = "xyes"; then
+        as_fn_error $? "cannot enable JFR on minimal1 VM or zero build" "$LINENO" 5
+      else
+        ENABLE_JFR=false
+      fi
+    elif test "x$OPENJDK_TARGET_OS" = xaix; then
+      if test "x$enable_jfr" = "xyes"; then
+        as_fn_error $? "AIX does not support JFR" "$LINENO" 5
+      else
+        ENABLE_JFR=false
+      fi
+    else
+      ENABLE_JFR=true
+    fi
+  else
+    as_fn_error $? "--enable-jfr must be set to either yes or no" "$LINENO" 5
+  fi
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ENABLE_JFR" >&5
+$as_echo "$ENABLE_JFR" >&6; }
+
+
 
   # Source the version numbers
   . $AUTOCONF_DIR/version-numbers
@@ -27955,7 +27996,7 @@ $as_echo "$as_me: The result from running with --version was: \"$COMPILER_VERSIO
     COMPILER_VERSION_STRING=`$ECHO $COMPILER_VERSION_OUTPUT | \
         $SED -e 's/ *Copyright .*//'`
     COMPILER_VERSION_NUMBER=`$ECHO $COMPILER_VERSION_OUTPUT | \
-        $SED -e 's/^.* \([1-9]\.[0-9.]*\) .*$/\1/'`
+        $SED -e 's/^.* \([1-9][0-9]*\.[0-9.]*\) .*$/\1/'`
   elif test  "x$TOOLCHAIN_TYPE" = xclang; then
     # clang --version output typically looks like
     #    Apple LLVM version 5.0 (clang-500.2.79) (based on LLVM 3.3svn)
@@ -29696,7 +29737,7 @@ $as_echo "$as_me: The result from running with --version was: \"$COMPILER_VERSIO
     COMPILER_VERSION_STRING=`$ECHO $COMPILER_VERSION_OUTPUT | \
         $SED -e 's/ *Copyright .*//'`
     COMPILER_VERSION_NUMBER=`$ECHO $COMPILER_VERSION_OUTPUT | \
-        $SED -e 's/^.* \([1-9]\.[0-9.]*\) .*$/\1/'`
+        $SED -e 's/^.* \([1-9][0-9]*\.[0-9.]*\) .*$/\1/'`
   elif test  "x$TOOLCHAIN_TYPE" = xclang; then
     # clang --version output typically looks like
     #    Apple LLVM version 5.0 (clang-500.2.79) (based on LLVM 3.3svn)
