@@ -9,6 +9,7 @@ cache:
 - '%CYG_CACHE%'
 
 init:
+- ps: /cygdrive/c/projects/jdk8u/.appveyor/install_cygwin.ps1 
 - '%CYG_ROOT%\setup-x86_64.exe --quiet-mode --no-verify --no-version-check --no-shortcuts --upgrade-also --packages binutils,make,m4,cpio,awk,file,zip,unzip,procps,git'
 - git config --global core.autocrlf input
 
@@ -17,10 +18,6 @@ install:
 
 version: 1.0.{build}
 image: Visual Studio 2017
-
-before_build:
-- ps: /cygdrive/c/projects/jdk8u/.appveyor/install_cygwin.ps1 
-
 build_script:
 - cmd: mkdir C:\Temp
 - cmd: cd /d C:\cygwin64\bin && .\bash --login /cygdrive/c/projects/jdk8u/.appveyor/windows-build.sh
