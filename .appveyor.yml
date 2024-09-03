@@ -12,7 +12,6 @@ init:
 - git config --global core.autocrlf input
 
 install:
-- '%CYG_ROOT%\setup-x86_64.exe --quiet-mode --no-shortcuts --upgrade-also --packages binutils,make,m4,cpio,awk,file,zip,unzip,procps,git'
 - '%CYG_ROOT%\bin\cygcheck -dc'
 
 version: 1.0.{build}
