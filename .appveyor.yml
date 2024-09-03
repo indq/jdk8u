@@ -16,7 +16,7 @@ install:
 - '%CYG_ROOT%\bin\cygcheck -dc'
 
 version: 1.0.{build}
-image: Visual Studio 2019
+image: Visual Studio 2017
 build_script:
 - cmd: mkdir C:\Temp
 - cmd: cd /d C:\cygwin64\bin && .\bash --login /cygdrive/c/projects/jdk8u/.appveyor/windows-build.sh
