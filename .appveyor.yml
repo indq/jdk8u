@@ -18,6 +18,7 @@ install:
 version: 1.0.{build}
 image: Visual Studio 2017
 build_script:
+- ps: /cygdrive/c/projects/jdk8u/.appveyor/install_cygwin.ps1 
 - cmd: mkdir C:\Temp
 - cmd: cd /d C:\cygwin64\bin && .\bash --login /cygdrive/c/projects/jdk8u/.appveyor/windows-build.sh
 - cmd: cd /d C:\projects\jdk8u
